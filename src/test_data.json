@@ -1,0 +1,17 @@
+{
+    "f_max_ceiling_height_m": 9,
+    "f_building_slope_deg":5.0,
+    "rack":{
+        "s_rack_type": "SRR",
+        "s_commodity_class": "C3",
+        "b_open_top_containers":false,
+        "f_rack_depth_mm": 900,
+        "f_beam_length_mm": 2000,
+        "f_vertical_clearance_mm": 150,
+        "b_horizontal_barriers": false,
+        "f_transverse_flue_length_mm": 500000,
+        "f_longitudinal_flue_length_mm": 500000,
+        "b_solid_shelves":true,
+        "f_max_storage_height_m":7.5
+    }
+}
