@@ -115,22 +115,22 @@ class Building():
                     if self.rack.b_solid_shelves:
                         if self.rack.f_solid_shelf_area_m2 > 6:
                             return [FMDS0809_FIGURES.Fig8, FMDS0809_FIGURES.Fig11]
-                        elif (2 < self.rack.f_solid_shelf_area_m2 <= 6):
-                            if self.rack.f_max_storage_height_m > 7.5:
+                        elif (2 <= self.rack.f_solid_shelf_area_m2 <= 6):
+                            if self.rack.f_max_storage_height_m >= 7.5:
                                 return [FMDS0809_FIGURES.Fig11]
                             else:
                                 return [FMDS0809_FIGURES.Fig8, FMDS0809_FIGURES.Fig11]
                         else:
                             pass
-                    if self.rack.f_max_storage_height_m > 7.5:
+                    if self.rack.f_max_storage_height_m <= 7.5:
                         if self.rack.s_commodity_class in [CommodityClass.C4, CommodityClass.CartonedPlastics, CommodityClass.UncartonedPlastics]:
                             if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
-                                if self.f_max_ceiling_height_m > 7.5:
+                                if self.f_max_ceiling_height_m >= 7.5:
                                     return [FMDS0809_FIGURES.Fig11]
                                 else:
                                     return [FMDS0809_FIGURES.Fig8, FMDS0809_FIGURES.Fig11]
                             else:
-                                if self.f_max_ceiling_height_m > 9:
+                                if self.f_max_ceiling_height_m <= 9:
                                     return[FMDS0809_FIGURES.Fig8, FMDS0809_FIGURES.Fig11]
                                 else:
                                     return [FMDS0809_FIGURES.Fig11]
@@ -144,11 +144,11 @@ class Building():
             print("See Section 2.2.4")
             return []
         else:
-            if self.rack.f_vertical_clearance_mm < 150:
+            if self.rack.f_vertical_clearance_mm < 150: # Strictly less than
                 return [FMDS0809_FIGURES.Fig11a]
             else:
                 if self.rack.b_horizontal_barriers:
-                    if self.rack.f_max_storage_height_m > 7.5:
+                    if self.rack.f_max_storage_height_m > 7.5: # Strictly greater than
                         if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
                             return [FMDS0809_FIGURES.Fig2j, FMDS0809_FIGURES.Fig11a]
                         else:
@@ -158,7 +158,7 @@ class Building():
                 else:
                     if self.rack.b_solid_shelves:
                         if self.rack.f_solid_shelf_area_m2 > 6:
-                            if self.rack.f_max_storage_height_m > 7.5:
+                            if self.rack.f_max_storage_height_m > 7.5: # Strictly greater than
                                 if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
                                     return [FMDS0809_FIGURES.Fig2j, FMDS0809_FIGURES.Fig11a]
                                 else:
@@ -166,7 +166,7 @@ class Building():
                             else:
                                 return [FMDS0809_FIGURES.Fig8, FMDS0809_FIGURES.Fig11, FMDS0809_FIGURES.Fig2j, FMDS0809_FIGURES.Fig11a]
                         elif (2 < self.rack.f_solid_shelf_area_m2 <= 6):
-                            if self.rack.f_max_storage_height_m > 7.5:
+                            if self.rack.f_max_storage_height_m > 7.5: # Strictly greater than
                                 if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
                                     return [FMDS0809_FIGURES.Fig11a]
                                 else:
@@ -175,15 +175,15 @@ class Building():
                                 return [FMDS0809_FIGURES.Fig8, FMDS0809_FIGURES.Fig11, FMDS0809_FIGURES.Fig2j, FMDS0809_FIGURES.Fig11a]
                         else:
                             pass
-                    if self.rack.f_max_storage_height_m > 7.5:
+                    if self.rack.f_max_storage_height_m <= 7.5:
                         if self.rack.s_commodity_class in [CommodityClass.C4, CommodityClass.CartonedPlastics, CommodityClass.UncartonedPlastics]:
                             if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
-                                if self.f_max_ceiling_height_m > 7.5:
+                                if self.f_max_ceiling_height_m > 7.5: # Strictly greater than
                                     return [FMDS0809_FIGURES.Fig8, FMDS0809_FIGURES.Fig11, FMDS0809_FIGURES.Fig2j, FMDS0809_FIGURES.Fig11a]
                                 else:
                                     return [FMDS0809_FIGURES.Fig11, FMDS0809_FIGURES.Fig11a]
                             else:
-                                if self.f_max_ceiling_height_m > 9:
+                                if self.f_max_ceiling_height_m > 9: # Strictly greater than
                                     return [FMDS0809_FIGURES.Fig11, FMDS0809_FIGURES.Fig11a]
                                 else:
                                     [FMDS0809_FIGURES.Fig8, FMDS0809_FIGURES.Fig11, FMDS0809_FIGURES.Fig2j, FMDS0809_FIGURES.Fig11a]
@@ -206,11 +206,11 @@ class Building():
             print("See Section 2.2.4")
             return []
         else:
-            if self.rack.f_vertical_clearance_mm < 150:
+            if self.rack.f_vertical_clearance_mm < 150: # Strictly less than
                 return [FMDS0809_FIGURES.Fig13]
             else:
                 if self.rack.b_horizontal_barriers:
-                    if self.rack.f_max_storage_height_m > 7.5:
+                    if self.rack.f_max_storage_height_m > 7.5: # Strictly greater than
                         if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
                             return [FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                         else:
@@ -219,8 +219,8 @@ class Building():
                         return [FMDS0809_FIGURES.Fig9, FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                 else:
                     if self.rack.b_solid_shelves:
-                        if self.rack.f_solid_shelf_area_m2 > 6:
-                            if self.rack.f_max_storage_height_m > 7.5:
+                        if self.rack.f_solid_shelf_area_m2 > 6: # Strictly greater than
+                            if self.rack.f_max_storage_height_m > 7.5: # Strictly greater than
                                 if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
                                     return [FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                                 else:
@@ -228,35 +228,39 @@ class Building():
                             else:
                                 return [FMDS0809_FIGURES.Fig9, FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                         elif (2 < self.rack.f_solid_shelf_area_m2 <= 6):
-                            if self.rack.f_max_storage_height_m > 7.5:
-                                return [FMDS0809_FIGURES.Fig9, FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
+                            if self.rack.f_max_storage_height_m > 7.5: # Strictly greater than
+                                return [FMDS0809_FIGURES.Fig13]
                             else:
                                 return [FMDS0809_FIGURES.Fig9, FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                         else:
                             pass
-                    if self.rack.f_max_storage_height_m > 7.5:
+                    if self.rack.f_max_storage_height_m > 7.5: # Strictly greater than
                         if self.rack.s_commodity_class in [CommodityClass.C4, CommodityClass.CartonedPlastics, CommodityClass.UncartonedPlastics]:
                             if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
-                                if self.f_max_ceiling_height_m > 7.5:
+                                if self.f_max_ceiling_height_m > 7.5: # Strictly greater than
                                     return [FMDS0809_FIGURES.Fig12, FMDS0809_FIGURES.Fig13]
                                 else:
                                     return [FMDS0809_FIGURES.Fig9, FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                             else:
-                                if self.f_max_ceiling_height_m > 9:
+                                if self.f_max_ceiling_height_m <= 9:
                                     return [FMDS0809_FIGURES.Fig9, FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                                 else:
                                     return [FMDS0809_FIGURES.Fig12, FMDS0809_FIGURES.Fig13]
+                        else:
+                            return [FMDS0809_FIGURES.Fig9, FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
+                    else:
+                        return [FMDS0809_FIGURES.Fig13]
                                 
     def drr_over_threshold(self):
         if self.rack.b_open_top_containers:
             print("See Section 2.2.4")
             return []
         else:
-            if self.rack.f_vertical_clearance_mm < 150:
+            if self.rack.f_vertical_clearance_mm < 150: # Strictly less than
                 return [FMDS0809_FIGURES.Fig13]
             else:
                 if self.rack.b_horizontal_barriers:
-                    if self.rack.f_max_storage_height_m > 7.5:
+                    if self.rack.f_max_storage_height_m > 7.5: # Strictly greater than
                         if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
                             return [FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                         else:
@@ -280,7 +284,7 @@ class Building():
                                 return [FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                         else:
                             pass
-                    if self.rack.f_max_storage_height_m > 7.5:
+                    if self.rack.f_max_storage_height_m > 7.5: # Strictly greater than
                         if self.rack.s_commodity_class in [CommodityClass.C4, CommodityClass.CartonedPlastics, CommodityClass.UncartonedPlastics]:
                             if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
                                 if self.f_max_ceiling_height_m > 7.5:
@@ -288,10 +292,10 @@ class Building():
                                 else:
                                     return [FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                             else:
-                                if self.f_max_ceiling_height_m > 9:
+                                if self.f_max_ceiling_height_m <= 9:
                                     return [FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                                 else:
-                                    return [FMDS0809_FIGURES.Fig13]
+                                    return [FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig13]
                         else:
                             return [FMDS0809_FIGURES.Fig9a, FMDS0809_FIGURES.Fig12a, FMDS0809_FIGURES.Fig2k, FMDS0809_FIGURES.Fig13]
                     else:
@@ -314,7 +318,7 @@ class Building():
                             return [FMDS0809_FIGURES.Fig10, FMDS0809_FIGURES.Fig14]
                     else:
                         pass
-                if self.rack.f_max_storage_height_m > 7.5:
+                if self.rack.f_max_storage_height_m <= 7.5:
                     if self.rack.s_commodity_class in [CommodityClass.C4, CommodityClass.CartonedPlastics, CommodityClass.UncartonedPlastics]:
                         if self.rack.s_commodity_class == CommodityClass.UncartonedPlastics:
                             if self.f_max_ceiling_height_m > 7.5:
@@ -322,7 +326,7 @@ class Building():
                             else:
                                 return [FMDS0809_FIGURES.Fig10, FMDS0809_FIGURES.Fig14]
                         else:
-                            if self.f_max_ceiling_height_m > 9:
+                            if self.f_max_ceiling_height_m <= 9:
                                 return [FMDS0809_FIGURES.Fig10, FMDS0809_FIGURES.Fig14]
                             else:
                                 return [FMDS0809_FIGURES.Fig14]
