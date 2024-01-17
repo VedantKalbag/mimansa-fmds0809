@@ -2,14 +2,12 @@ import streamlit as st
 import fmds0809
 import json
 
-def quit_gracefully():
-    st.stop()
+
 
 col1, col2 = st.columns(2)
 with col1:
     st.markdown("# FM Global DS 8-9 Tool \n #### Mimansa Risk Consulting")
-with col2:
-    st.button("Exit", on_click=quit_gracefully)
+
 
 def input_form():
     col1, col2, col3 = st.columns([1, 1, 1])
