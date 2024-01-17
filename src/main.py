@@ -25,7 +25,7 @@ def input_form():
     elif commodity_class == 'Class IV':
         s_commodity_class = 'C4'
     else:
-        s_commodity_class = commodity_class
+        s_commodity_class = commodity_class.replace(" ", "")
     open_top = col2.selectbox('Are there open top containers?', ('Yes', 'No'), index=1)
     if open_top == 'Yes':
         b_open_top_containers = True
