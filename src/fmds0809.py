@@ -91,9 +91,7 @@ class Building():
             figures = self.mrr()
         else:
             raise ValueError("Invalid rack type")
-        if len(figures) > 0 :
-            # print([f for f in figures])
-            return figures
+        return figures
         
     def srr(self):
         if self.rack.f_rack_depth_mm <= self.rack.F_SRR_RACK_DEPTH_THRESHOLD_MM:
