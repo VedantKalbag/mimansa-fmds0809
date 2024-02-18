@@ -6,6 +6,8 @@ import os
 
 RACK_TYPE=['SRR', 'DRR','MRR']
 COMMODITY_CLASS = ['Class I', 'Class II', 'Class III', 'Class IV', 'Uncartoned Plastics', 'Cartoned Plastics']
+YES_NO = [1, 0]
+NO_YES = [0, 1]
 
 
 def process_commodity_class(commodity_class):
@@ -40,14 +42,14 @@ def input_form(path_to_json):
         f_building_slope_deg_default = data['f_building_slope_deg']
         s_rack_type_default = RACK_TYPE.index(data['rack']['s_rack_type'])
         s_commodity_class_default = COMMODITY_CLASS.index(process_commodity_class_reverse(data['rack']['s_commodity_class']))
-        b_open_top_containers_default = data['rack']['b_open_top_containers']
+        b_open_top_containers_default = YES_NO.index(data['rack']['b_open_top_containers'])
         f_rack_depth_mm_default = data['rack']['f_rack_depth_mm']
         f_beam_length_mm_default = data['rack']['f_beam_length_mm']
         f_vertical_clearance_mm_default = data['rack']['f_vertical_clearance_mm']
-        b_horizontal_barriers_default = data['rack']['b_horizontal_barriers']
+        b_horizontal_barriers_default = YES_NO.index(data['rack']['b_horizontal_barriers'])
         f_transverse_flue_length_mm_default = data['rack']['f_transverse_flue_length_mm']
         f_longitudinal_flue_length_mm_default = data['rack']['f_longitudinal_flue_length_mm']
-        b_solid_shelves_default = data['rack']['b_solid_shelves']
+        b_solid_shelves_default = NO_YES.index(data['rack']['b_solid_shelves'])
         f_max_storage_height_default = data['rack']['f_max_storage_height_m']
         os.remove(path_to_json)
     else:
@@ -55,20 +57,20 @@ def input_form(path_to_json):
         f_building_slope_deg_default = 0.0
         s_rack_type_default = 0
         s_commodity_class_default = 0
-        b_open_top_containers_default = False
-        f_rack_depth_mm_default = 1200.0
-        f_beam_length_mm_default = 2700.0
-        f_vertical_clearance_mm_default = 100.0
-        b_horizontal_barriers_default = False
-        f_transverse_flue_length_mm_default = 0.0
-        f_longitudinal_flue_length_mm_default = 0.0
-        b_solid_shelves_default = False
+        b_open_top_containers_default = 1
+        f_rack_depth_mm_default = 1200
+        f_beam_length_mm_default = 2700
+        f_vertical_clearance_mm_default = 100
+        b_horizontal_barriers_default = 1
+        f_transverse_flue_length_mm_default = 0
+        f_longitudinal_flue_length_mm_default = 0
+        b_solid_shelves_default = 0
         f_max_storage_height_default = 12.0
     
         
     col1, col2, col3 = st.columns([1, 1, 1])
-    f_max_ceiling_height = col1.number_input('What is the maximum ceiling height (in m)?', min_value=0.0, max_value=100.0, value=f_max_ceiling_height_default, step=0.1)
-    f_building_slope_deg = col1.number_input('What is the building slope (in degrees)?', min_value=0.0, max_value=90.0, value=f_building_slope_deg_default, step=0.1)
+    f_max_ceiling_height = col1.number_input('What is the maximum ceiling height (in m)?', min_value=0.0, max_value=100.0, value=f_max_ceiling_height_default, step=0.1, format="%.1f")
+    f_building_slope_deg = col1.number_input('What is the building slope (in degrees)?', min_value=0.0, max_value=90.0, value=f_building_slope_deg_default, step=0.1, format="%.1f")
     s_rack_type = col1.selectbox('What is the rack type?', ('SRR', 'DRR','MRR'), index = s_rack_type_default)
 
     commodity_class = col1.selectbox('What is the commodity class?', ('Class I', 'Class II', 'Class III', 'Class IV', 'Uncartoned Plastics', 'Cartoned Plastics'), index = s_commodity_class_default)
@@ -82,28 +84,28 @@ def input_form(path_to_json):
         s_commodity_class = 'C4'
     else:
         s_commodity_class = commodity_class.replace(" ", "")
-    open_top = col2.selectbox('Are there open top containers?', ('Yes', 'No'), index=1)
+    open_top = col2.selectbox('Are there open top containers?', ('Yes', 'No'), index=b_open_top_containers_default)
     if open_top == 'Yes':
         b_open_top_containers = True
     else:
         b_open_top_containers = False
-    f_rack_depth_mm = col2.number_input('What is the rack depth (in mm)?', min_value=0.0, max_value=10000.0, value=1200.0, step=0.01)
-    f_beam_length_mm = col2.number_input('What is the beam length (in mm)?', min_value=0.0, max_value=10000.0, value=2700.0, step=0.01)
-    f_vertical_clearance_mm = col2.number_input('What is the vertical clearance (in mm)?', min_value=0.0, max_value=10000.0, value=100.0, step=0.01)
-    horizontal_barriers = col3.selectbox('Are there horizontal barriers?', ('Yes', 'No'))
+    f_rack_depth_mm = col2.number_input('What is the rack depth (in mm)?', min_value=0, max_value=10000, value=f_rack_depth_mm_default, step=1)
+    f_beam_length_mm = col2.number_input('What is the beam length (in mm)?', min_value=0, max_value=10000, value=f_beam_length_mm_default, step=1)
+    f_vertical_clearance_mm = col2.number_input('What is the vertical clearance (in mm)?', min_value=0, max_value=10000, value=f_vertical_clearance_mm_default, step=1)
+    horizontal_barriers = col3.selectbox('Are there horizontal barriers?', ('Yes', 'No'), index=b_horizontal_barriers_default)
     if horizontal_barriers == 'Yes':
         b_horizontal_barriers = True
     else:
         b_horizontal_barriers = False
-    f_transverse_flue_length_mm = col3.number_input('What is the transverse flue length (in mm)?', min_value=0.0, max_value=10000.0, value=0.0, step=0.01)
-    f_longitudinal_flue_length_mm = col3.number_input('What is the longitudinal flue length (in mm)?', min_value=0.0, max_value=10000.0, value=0.0, step=0.01)
+    f_transverse_flue_length_mm = col3.number_input('What is the transverse flue length (in mm)?', min_value=0, max_value=10000, value=f_transverse_flue_length_mm_default, step=1)
+    f_longitudinal_flue_length_mm = col3.number_input('What is the longitudinal flue length (in mm)?', min_value=0, max_value=10000, value=f_longitudinal_flue_length_mm_default, step=1)
 
-    solid_shelves = col3.selectbox('Are there solid shelves?', ('No','Yes'))
+    solid_shelves = col3.selectbox('Are there solid shelves?', ('No','Yes'), index=b_solid_shelves_default)
     if solid_shelves == 'Yes':
         b_solid_shelves = True
     else:
         b_solid_shelves = False
-    f_max_storage_height = col3.number_input('What is the maximum storage height (in m)?', min_value=0.0, max_value=100.0, value=12.0, step=0.01)
+    f_max_storage_height = col3.number_input('What is the maximum storage height (in m)?', min_value=0.0, max_value=100.0, value=f_max_storage_height_default, step=0.1, format="%.1f")
 
     submitted = st.button("Submit")
     if submitted:
@@ -148,7 +150,6 @@ if __name__=='__main__':
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("### FM Global DS 8-9 Tool ")
-    paths=[]
     if 'stage' not in st.session_state:
         st.session_state.stage = 0
 
@@ -165,13 +166,16 @@ if __name__=='__main__':
         # st.write("Please wait while we generate the designs...")
         try:
             paths = run_model()
+            if len(paths) == 0:
+                st.write("Please refer to Section 2.2.4 of FM 8-9")
+            with st.container():
+                st.write("Here are the acceptable designs, as per FM 8-9:")
+                for path in paths:
+                    st.image('./resources/'+path)
         except NotImplementedError as e:
             st.write("Please refer to Section 2.2.4 of FM 8-9")
         # print(paths)
         # st.write(paths)
-        with st.container():
-            for path in paths:
-                st.image('./resources/'+path)
         # st.button('Reset', on_click=set_state, args=[0])
         set_state(0)
 
