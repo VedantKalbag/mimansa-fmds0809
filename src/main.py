@@ -4,11 +4,19 @@ import json
 import os
 
 
-RACK_TYPE=['SRR', 'DRR','MRR']
+RACK_TYPE=['Single Row Rack', 'Double Row Rack','Multi Row Rack']
 COMMODITY_CLASS = ['Class I', 'Class II', 'Class III', 'Class IV', 'Uncartoned Plastics', 'Cartoned Plastics']
 YES_NO = [1, 0]
 NO_YES = [0, 1]
 
+
+def process_rack_type(rack_type):
+    if rack_type == 'SRR':
+        return 'Single Row Rack'
+    elif rack_type == 'DRR':
+        return 'Double Row Rack'
+    else:
+        return 'Multi Row Rack'
 
 def process_commodity_class(commodity_class):
     if commodity_class == 'Class I':
@@ -40,7 +48,7 @@ def input_form(path_to_json):
             data = json.load(f)
         f_max_ceiling_height_default = data['f_max_ceiling_height_m']
         f_building_slope_deg_default = data['f_building_slope_deg']
-        s_rack_type_default = RACK_TYPE.index(data['rack']['s_rack_type'])
+        s_rack_type_default = RACK_TYPE.index(process_rack_type(data['rack']['s_rack_type']))
         s_commodity_class_default = COMMODITY_CLASS.index(process_commodity_class_reverse(data['rack']['s_commodity_class']))
         b_open_top_containers_default = YES_NO.index(data['rack']['b_open_top_containers'])
         f_rack_depth_mm_default = data['rack']['f_rack_depth_mm']
@@ -69,11 +77,17 @@ def input_form(path_to_json):
     
         
     col1, col2, col3 = st.columns([1, 1, 1])
-    f_max_ceiling_height = col1.number_input('What is the maximum ceiling height (in m)?', min_value=0.0, max_value=100.0, value=f_max_ceiling_height_default, step=0.1, format="%.1f")
-    f_building_slope_deg = col1.number_input('What is the building slope (in degrees)?', min_value=0.0, max_value=90.0, value=f_building_slope_deg_default, step=0.1, format="%.1f")
-    s_rack_type = col1.selectbox('What is the rack type?', ('SRR', 'DRR','MRR'), index = s_rack_type_default)
+    f_max_ceiling_height = col1.number_input('Maximum Ceiling Height (in m)?', min_value=0.0, max_value=100.0, value=f_max_ceiling_height_default, step=0.1, format="%.1f")
+    f_building_slope_deg = col1.number_input('Building Slope (in degrees)?', min_value=0.0, max_value=90.0, value=f_building_slope_deg_default, step=0.1, format="%.1f")
+    s_rack_type = col1.selectbox('Type of Rack', ('Single Row Rack', 'Double Row Rack','Multi Row Rack'), index = s_rack_type_default)
+    if s_rack_type == 'Single Row Rack':
+        s_rack_type = 'SRR'
+    elif s_rack_type == 'Double Row Rack':
+        s_rack_type = 'DRR'
+    else:
+        s_rack_type = 'MRR'
 
-    commodity_class = col1.selectbox('What is the commodity class?', ('Class I', 'Class II', 'Class III', 'Class IV', 'Uncartoned Plastics', 'Cartoned Plastics'), index = s_commodity_class_default)
+    commodity_class = col1.selectbox('Class of Commodity Stored', ('Class I', 'Class II', 'Class III', 'Class IV', 'Uncartoned Plastics', 'Cartoned Plastics'), index = s_commodity_class_default)
     if commodity_class == 'Class I':
         s_commodity_class = 'C1'
     elif commodity_class == 'Class II':
@@ -84,28 +98,28 @@ def input_form(path_to_json):
         s_commodity_class = 'C4'
     else:
         s_commodity_class = commodity_class.replace(" ", "")
-    open_top = col2.selectbox('Are there open top containers?', ('Yes', 'No'), index=b_open_top_containers_default)
+    open_top = col2.selectbox('Open Top Containers?', ('Yes', 'No'), index=b_open_top_containers_default)
     if open_top == 'Yes':
         b_open_top_containers = True
     else:
         b_open_top_containers = False
-    f_rack_depth_mm = col2.number_input('What is the rack depth (in mm)?', min_value=0, max_value=10000, value=f_rack_depth_mm_default, step=1)
-    f_beam_length_mm = col2.number_input('What is the beam length (in mm)?', min_value=0, max_value=10000, value=f_beam_length_mm_default, step=1)
-    f_vertical_clearance_mm = col2.number_input('What is the vertical clearance (in mm)?', min_value=0, max_value=10000, value=f_vertical_clearance_mm_default, step=1)
-    horizontal_barriers = col3.selectbox('Are there horizontal barriers?', ('Yes', 'No'), index=b_horizontal_barriers_default)
+    f_rack_depth_mm = col2.number_input('Rack Depth (in mm)?', min_value=0, max_value=10000, value=f_rack_depth_mm_default, step=1)
+    f_beam_length_mm = col2.number_input('Beam Length (in mm)?', min_value=0, max_value=10000, value=f_beam_length_mm_default, step=1)
+    f_vertical_clearance_mm = col2.number_input('Distance between in-rack deflector and top of storage (in mm)?', min_value=0, max_value=10000, value=f_vertical_clearance_mm_default, step=1)
+    horizontal_barriers = col3.selectbox('Horizontal Barriers?', ('Yes', 'No'), index=b_horizontal_barriers_default)
     if horizontal_barriers == 'Yes':
         b_horizontal_barriers = True
     else:
         b_horizontal_barriers = False
-    f_transverse_flue_length_mm = col3.number_input('What is the transverse flue length (in mm)?', min_value=0, max_value=10000, value=f_transverse_flue_length_mm_default, step=1)
-    f_longitudinal_flue_length_mm = col3.number_input('What is the longitudinal flue length (in mm)?', min_value=0, max_value=10000, value=f_longitudinal_flue_length_mm_default, step=1)
+    f_transverse_flue_length_mm = col3.number_input('Transverse Flue Length (in mm)?', min_value=0, max_value=10000, value=f_transverse_flue_length_mm_default, step=1)
+    f_longitudinal_flue_length_mm = col3.number_input('Longitudinal Flue Length (in mm)?', min_value=0, max_value=10000, value=f_longitudinal_flue_length_mm_default, step=1)
 
-    solid_shelves = col3.selectbox('Are there solid shelves?', ('No','Yes'), index=b_solid_shelves_default)
+    solid_shelves = col3.selectbox('Solid Shelves?', ('No','Yes'), index=b_solid_shelves_default)
     if solid_shelves == 'Yes':
         b_solid_shelves = True
     else:
         b_solid_shelves = False
-    f_max_storage_height = col3.number_input('What is the maximum storage height (in m)?', min_value=0.0, max_value=100.0, value=f_max_storage_height_default, step=0.1, format="%.1f")
+    f_max_storage_height = col3.number_input('Maximum Storage Height (in m)?', min_value=0.0, max_value=100.0, value=f_max_storage_height_default, step=0.1, format="%.1f")
 
     submitted = st.button("Submit")
     if submitted:
@@ -147,9 +161,7 @@ def set_state(i):
 if __name__=='__main__':
 
     st.image('./resources/mimansa-logo.png', width=350)
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("### FM Global DS 8-9 Tool ")
+    st.markdown("### FM Global DS 8-9 Tool For In-Rack Options")
     if 'stage' not in st.session_state:
         st.session_state.stage = 0
 
